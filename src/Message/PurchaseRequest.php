@@ -138,13 +138,13 @@ class PurchaseRequest extends AbstractRequest
         /** @var \Omnipay\Common\CreditCard $card */
         $card = $this->getCard();
         if ($card) {
-            if ($this->getPaymentMethod() == 'overboeking' || $this->getPaymentMethod() == 'klarna') {
+            if ($this->getPaymentMethod() == 'overboeking' || $this->getPaymentMethod() == 'klarna' || $this->getPaymentMethod() == 'afterpay') {
                 $data['billing_mail'] = $card->getEmail();
                 $data['billing_firstname'] = $card->getBillingFirstName();
                 $data['billing_lastname'] = $card->getBillingLastName();
             }
 
-            if ($this->getPaymentMethod() == 'klarna') {
+            if ($this->getPaymentMethod() == 'klarna' || $this->getPaymentMethod() == 'afterpay') {
                 $data['billing_company'] = $card->getBillingCompany();
                 $data['billing_address1'] = $card->getBillingAddress1();
                 $data['billing_address2'] = $card->getBillingAddress2();
@@ -205,6 +205,8 @@ class PurchaseRequest extends AbstractRequest
                 //@todo fix tax rates
                 $data['product_tax_' . $x] = round(($this->formatCurrency($item->getPrice()) / 121 * 21) * 100);
                 $data['product_taxrate_' . $x] = 21 * 100;
+                $data['product_shipping' . $x] = 495;
+
             }
         }
 
