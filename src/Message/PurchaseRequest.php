@@ -163,7 +163,9 @@ class PurchaseRequest extends AbstractRequest
                 $data['shipping_countrycode'] = $this->getShippingCountrycode();
 
                 // only used for klarna account (required for klarna invoice as -1)
-                $data['pclass'] = - 1;
+                if ($this->getPaymentMethod() == 'klarna') {
+                    $data['pclass'] = -1;
+                }
 
                 $data = array_merge($data, $this->getItemData());
             }
